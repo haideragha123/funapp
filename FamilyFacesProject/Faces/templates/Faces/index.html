@@ -1,0 +1,15 @@
+{% extends 'Faces/base.html' %}
+
+{% block content %}
+
+<div class="inner cover">
+	<h1 class="cover-heading">Family Faces</h1>
+	<form action="{% url 'index' %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p class="lead">
+		<input type="submit" class="btn btn-lg btn-default" value="Send">
+	</form>
+</div>
+
+{% endblock %}

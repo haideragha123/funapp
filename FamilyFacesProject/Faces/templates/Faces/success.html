@@ -1,0 +1,10 @@
+{% extends 'Faces/base.html' %}
+
+{% block content %}
+
+<div class="inner cover">
+	<h1 class="cover-heading">Image saved successfully!</h1>
+	<p><img src="{{ MEDIA_URL }}{{ picture_url }}" alt="stored image" height='400' width='400'/></p>
+</div>
+
+{% endblock %}

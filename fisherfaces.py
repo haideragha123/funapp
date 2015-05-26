@@ -1,22 +1,30 @@
 import sys, os
 sys.path.append("../..")
 # import facerec modules
-from facerec.feature import Fisherfaces
-from facerec.distance import EuclideanDistance
+from facerec.feature import Fisherfaces, SpatialHistogram, Identity
+from facerec.distance import EuclideanDistance, ChiSquareDistance
 from facerec.classifier import NearestNeighbor
 from facerec.model import PredictableModel
 from facerec.validation import KFoldCrossValidation
 from facerec.visual import subplot
 from facerec.util import minmax_normalize
+from facerec.serialization import save_model, load_model
 # import numpy, matplotlib and logging
 import numpy as np
-from PIL import Image
+# try to import the PIL Image module
+try:
+    from PIL import Image
+except ImportError:
+    import Image
 import matplotlib.cm as cm
 import logging
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+from facerec.lbp import LPQ, ExtendedLBP
 
 
 model = PredictableModel(Fisherfaces(), NearestNeighbor())
-def read_images(path, sz=(60,60)):
+def read_images(path, sz=(100,100)):
 
     c = 0
     X,y = [], []
@@ -33,20 +41,32 @@ def read_images(path, sz=(60,60)):
 						im = im.resize(sz, Image.ANTIALIAS)
 					#im.show()
 					X.append(np.asarray(im, dtype=np.uint8))
-					y.append(subdirname)
+					y.append(c)
 				except IOError, (errno, strerror):
 					print "I/O error({0}): {1}".format(errno, strerror)
 				except:
 					print "Unexpected error:", sys.exc_info()[0]
 					raise
-		
+            c = c+1
     return [X,y]
 	
-[X,y] = read_images("pictures/")
+def testresults(testdir):
 
+    for pic in os.listdir(testdir):
 
-print len(y)
-print len(X)	
+        im = Image.open(os.path.join(testdir,pic))
+        im = im.convert("L")
+        im = im.resize((100,100), Image.ANTIALIAS)
+
+        predicted_label = model.predict(np.asarray(im,dtype=np.uint8))[0]
+        print predicted_label
+        
+[X,y] = read_images("test_results/")
+
+#print len(y)
+#print len(X)	
 model.compute(X,y)
+save_model('genderclass.pkl', model)
+#testresults('test_results/')
 
-#model.predict('pictures/0/2.jpg')
+#model.feature.extract(X)

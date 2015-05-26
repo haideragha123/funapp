@@ -22,5 +22,10 @@ def about(request):
 
 def success(request, picture_id):
 	picture = get_object_or_404(Picture, pk=picture_id)
-	# return HttpResponse("Picture saved successfully!")
-	return render(request, 'Faces/success.html', {'picture_url' : picture.image_file.url})
+	# insert function here
+	# get all cropped objects that reference this picture
+	cropped_people = []
+	return render(request, 'Faces/success.html', {
+		'picture_url' : picture.image_file.url,
+		'cropped_people' : cropped_people
+		})

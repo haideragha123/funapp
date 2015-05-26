@@ -20,7 +20,6 @@ import logging
 from facerec.lbp import LPQ, ExtendedLBP
 
 
-#model = PredictableModel(Fisherfaces(), NearestNeighbor())
 def read_images(path, sz=(100,100)):
 
     c = 0
@@ -58,14 +57,6 @@ def testresults(testdir, model):
         predicted_label = model.predict(np.asarray(im,dtype=np.uint8))[0]
         print predicted_label
         
-#[X,y] = read_images("test_results/")
 
-#print len(y)
-#print len(X)	
-#model.compute(X,y)
-#save_model('genderclass.pkl', model)
-
-testresults('test_results/', load_model('genderclass.pkl'))
-
-
-#model.feature.extract(X)
+my_model = load_model('genderclass.pkl')
+testresults('temp', my_model)

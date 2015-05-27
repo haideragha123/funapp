@@ -2,18 +2,20 @@
 
 {% block content %}
 
-<div class="inner cover">
-	<h1 class="cover-heading">Image saved successfully!</h1>
-	<p><img src="{{ MEDIA_URL }}{{ picture_url }}" alt="stored image" height='400' width='400'/></p>
+<div class="col-md-6 pic-section">
+	<p><img class="img-responsive result-image img-rounded" src="{{ MEDIA_URL }}{{ picture_url }}" alt="stored image" height='400' width='400'/></p>
 </div>
 
-<ul>
-{% for person in cropped_people %}
-	<li>
-		<img src="{{ MEDIA_URL }}{{ person.cropped_image.url }}" alt="stored image" height='50' width='50'/>
-		{{ person.gender }}
-	</li>
-{% endfor %}
-</ul>>
+<div class="col-md-6 list-section">
+	<ul class="list-inline">
+	<h2 class="cover-heading">Faces in the picture</h2>
+	{% for person in cropped_people %}
+		<li>
+			<img class="img-responsive thumbnail-image " src="{{ MEDIA_URL }}{{ person.cropped_image.url }}" alt="stored image"/>
+			<p>{{ person.gender }}</p>
+		</li>
+	{% endfor %}
+	</ul>
+</div>
 
 {% endblock %}

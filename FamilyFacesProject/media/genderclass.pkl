@@ -1,7 +1,7 @@
 ccopy_reg
 _reconstructor
 p1
-(cfacerec.model
+(cFaces.haar.facerec.model
 PredictableModel
 p2
 c__builtin__
@@ -12,7 +12,7 @@ NtRp4
 S'feature'
 p6
 g1
-(cfacerec.feature
+(cFaces.haar.facerec.feature
 Fisherfaces
 p7
 g3
@@ -75,7 +75,7 @@ I1
 sbsS'classifier'
 p21
 g1
-(cfacerec.classifier
+(cFaces.haar.facerec.classifier
 NearestNeighbor
 p22
 g3
@@ -84,7 +84,7 @@ NtRp23
 S'dist_metric'
 p25
 g1
-(cfacerec.distance
+(cFaces.haar.facerec.distance
 EuclideanDistance
 p26
 g3

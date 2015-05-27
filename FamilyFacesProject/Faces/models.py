@@ -20,6 +20,3 @@ class Person(models.Model):
 	original_image = models.ForeignKey(Picture)
 	cropped_image = models.ImageField(upload_to='Faces/cropped')
 	gender = models.CharField(max_length=3, choices=GENDER_CHOICES, default=MALE)
-
-	def __str__(self):
-		return self.relation_type

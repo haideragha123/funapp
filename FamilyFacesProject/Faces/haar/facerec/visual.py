@@ -1,4 +1,4 @@
-from facerec.normalization import minmax
+from Faces.haar.facerec.normalization import minmax
 
 import os as os
 import numpy as np

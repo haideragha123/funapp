@@ -1,14 +1,12 @@
-import sys, os
-sys.path.append("../..")
 # import facerec modules
-from facerec.feature import Fisherfaces, SpatialHistogram, Identity
-from facerec.distance import EuclideanDistance, ChiSquareDistance
-from facerec.classifier import NearestNeighbor
-from facerec.model import PredictableModel
-from facerec.validation import KFoldCrossValidation
-from facerec.visual import subplot
-from facerec.util import minmax_normalize
-from facerec.serialization import save_model, load_model
+from Faces.haar.facerec.feature import Fisherfaces, SpatialHistogram, Identity
+from Faces.haar.facerec.distance import EuclideanDistance, ChiSquareDistance
+from Faces.haar.facerec.classifier import NearestNeighbor
+from Faces.haar.facerec.model import PredictableModel
+from Faces.haar.facerec.validation import KFoldCrossValidation
+from Faces.haar.facerec.visual import subplot
+from Faces.haar.facerec.util import minmax_normalize
+from Faces.haar.facerec.serialization import save_model, load_model
 # import numpy, matplotlib and logging
 import numpy as np
 # try to import the PIL Image module
@@ -17,8 +15,14 @@ try:
 except ImportError:
     import Image
 import logging
-from facerec.lbp import LPQ, ExtendedLBP
+from Faces.haar.facerec.lbp import LPQ, ExtendedLBP
 
+from Faces.models import Person
+
+from django.conf import settings
+from django.core.files import File
+
+import sys, os
 
 def read_images(path, sz=(100,100)):
 
@@ -46,17 +50,23 @@ def read_images(path, sz=(100,100)):
             c = c+1
     return [X,y]
 	
-def testresults(testdir, model):
 
-    for pic in os.listdir(testdir):
 
-        im = Image.open(os.path.join(testdir,pic))
-        im = im.convert("L")
-        im = im.resize((100,100), Image.ANTIALIAS)
-
-        predicted_label = model.predict(np.asarray(im,dtype=np.uint8))[0]
-        print predicted_label
-        
-
-my_model = load_model('genderclass.pkl')
-testresults('temp', my_model)
+def testresults(testdir,orig_img):
+	model = load_model(settings.MEDIA_ROOT + '/genderclass.pkl')
+	for pic in os.listdir(testdir):
+		im = Image.open(os.path.join(testdir,pic))
+		im = im.convert("L")
+		im = im.resize((100,100), Image.ANTIALIAS)
+		f = open(os.path.join(testdir,pic), 'r')
+		cropped_image_file = File(f)
+		predicted_label = model.predict(np.asarray(im,dtype=np.uint8))[0]
+		if (predicted_label == 0):
+			print "Found a female"
+			p = Person(original_image=orig_img, cropped_image=cropped_image_file, gender='F')
+			p.save()
+		else :
+			print "Found a male"
+			p = Person(original_image=orig_img, cropped_image=cropped_image_file, gender='M')
+			p.save()
+		f.close()

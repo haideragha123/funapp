@@ -3,17 +3,22 @@ import cv2
 import os.path
 from PIL import Image
 
-def face_crop(image):
+from django.conf import settings
 
-    face_cascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_default.xml')
+def face_crop(image_path, temp_path):
+
+    CASCADE_PATH = settings.MEDIA_ROOT +'/cascades/haarcascade_frontalface_default.xml'
+
+    face_cascade = cv2.CascadeClassifier(CASCADE_PATH)
     #eye_cascade = cv2.CascadeClassifier('cascades\haarcascade_eye.xml')
     #imgfolder = 'test/'
-    results_folder = 'temp/'
+    results_folder = temp_path + '/'
+    print image_path
 
     idx = 0
     #for imgo in os.listdir(imgfolder):
 
-    img = cv2.imread(os.path.join(image))
+    img = cv2.imread(image_path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     #gray = cv2.equalizeHist(gray)
@@ -31,5 +36,3 @@ def face_crop(image):
         idx +=1
     	
     cv2.destroyAllWindows()
-    
-face_crop(os.path.join('1.jpg'))

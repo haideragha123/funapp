@@ -3,8 +3,8 @@ import math as math
 import random as random
 import logging
 
-from facerec.model import PredictableModel
-from facerec.classifier import AbstractClassifier
+from Faces.haar.facerec.model import PredictableModel
+from Faces.haar.facerec.classifier import AbstractClassifier
 
 # TODO The evaluation of a model should be completely moved to the generic ValidationStrategy. The specific Validation 
 #       implementations should only care about partition the data, which would make a lot sense. Currently it is not 

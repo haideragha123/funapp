@@ -1,4 +1,4 @@
-from facerec.feature import AbstractFeature
+from Faces.haar.facerec.feature import AbstractFeature
 import numpy as np
 
 class FeatureOperator(AbstractFeature):

@@ -1,6 +1,6 @@
-from facerec.classifier import SVM
-from facerec.validation import KFoldCrossValidation
-from facerec.model import PredictableModel
+from Faces.haar.facerec.classifier import SVM
+from Faces.haar.facerec.validation import KFoldCrossValidation
+from Faces.haar.facerec.model import PredictableModel
 from svmutil import *
 from itertools import product
 import numpy as np
@@ -31,7 +31,7 @@ def grid_search(model, X, y, C_range=(-5,  15, 2), gamma_range=(3, -15, -2), k=5
     if not isinstance(model.classifier, SVM):
         raise TypeError("GridSearch expects a SVM as classifier. Please use a facerec.classifier.SVM!")
     
-    logger = logging.getLogger("facerec.svm.gridsearch")
+    logger = logging.getLogger("Faces.haar.facerec.svm.gridsearch")
     logger.info("Performing a Grid Search.")
     
     # best parameter combination to return

@@ -35,8 +35,8 @@ class Identity(AbstractFeature):
         return "Identity"
 
 
-from facerec.util import asColumnMatrix
-from facerec.operators import ChainOperator, CombineOperator
+from Faces.haar.facerec.util import asColumnMatrix
+from Faces.haar.facerec.operators import ChainOperator, CombineOperator
         
 class PCA(AbstractFeature):
     def __init__(self, num_components=0):
@@ -222,7 +222,7 @@ class Fisherfaces(AbstractFeature):
     def __repr__(self):
         return "Fisherfaces (num_components=%s)" % (self.num_components)
 
-from facerec.lbp import LocalDescriptor, ExtendedLBP
+from Faces.haar.facerec.lbp import LocalDescriptor, ExtendedLBP
 
 class SpatialHistogram(AbstractFeature):
     def __init__(self, lbp_operator=ExtendedLBP(), sz = (8,8)):

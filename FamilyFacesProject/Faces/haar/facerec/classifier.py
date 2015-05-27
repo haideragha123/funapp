@@ -1,5 +1,5 @@
-from facerec.distance import EuclideanDistance
-from facerec.util import asRowMatrix
+from Faces.haar.facerec.distance import EuclideanDistance
+from Faces.haar.facerec.util import asRowMatrix
 import logging
 import numpy as np
 import operator as op
@@ -99,10 +99,10 @@ class NearestNeighbor(AbstractClassifier):
 try:
     from svmutil import *
 except ImportError:
-    logger = logging.getLogger("facerec.classifier.SVM")
+    logger = logging.getLogger("Faces.haar.facerec.classifier.SVM")
     logger.debug("Import Error: libsvm bindings not available.")
 except:
-    logger = logging.getLogger("facerec.classifier.SVM")
+    logger = logging.getLogger("Faces.haar.facerec.classifier.SVM")
     logger.debug("Import Error: libsvm bindings not available.")
 
 import sys
@@ -129,7 +129,7 @@ class SVM(AbstractClassifier):
 
     def __init__(self, param=None):
         AbstractClassifier.__init__(self)
-        self.logger = logging.getLogger("facerec.classifier.SVM")
+        self.logger = logging.getLogger("Faces.haar.facerec.classifier.SVM")
         self.param = param
         self.svm = svm_model()
         self.param = param
